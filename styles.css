@@ -1,0 +1,501 @@
+/* CSS for Botanica Sanctuary: The Living Blossom Garden */
+:root {
+    --primary-rose: #d62246;
+    --rose-glow: rgba(214, 34, 70, 0.4);
+    --gold: #f4b232;
+    --emerald: #104f2a;
+    --glass-bg: rgba(18, 24, 20, 0.65);
+    --glass-border: rgba(255, 255, 255, 0.18);
+    --glass-blur: blur(14px);
+    --text-light: #f8fafc;
+    --text-muted: #cbd5e1;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: #0d130e;
+    font-family: 'Cinzel', 'Playfair Display', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, serif;
+    color: var(--text-light);
+}
+
+#canvas-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+}
+
+/* Vignette & cinematic overlay */
+.cinematic-vignette {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 2;
+    background: radial-gradient(circle at center, transparent 45%, rgba(10, 15, 12, 0.45) 85%, rgba(6, 10, 8, 0.8) 100%);
+}
+
+/* UI Layer */
+.ui-layer {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 18px 24px;
+}
+
+/* Top Header */
+.top-header {
+    pointer-events: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 12px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    animation: fadeInDown 0.8s ease-out;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.brand-icon {
+    font-size: 2rem;
+    filter: drop-shadow(0 0 8px rgba(230, 40, 80, 0.7));
+    animation: gentlePulse 3s infinite ease-in-out;
+}
+
+.brand-title {
+    font-size: 1.35rem;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    background: linear-gradient(135deg, #ffffff 20%, #fecdd3 50%, #fda4af 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+}
+
+.brand-subtitle {
+    font-size: 0.75rem;
+    color: var(--text-muted);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    letter-spacing: 0.8px;
+    margin-top: 2px;
+}
+
+/* Preset Navigation Bar */
+.nav-pills {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.nav-pill {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    color: #e2e8f0;
+    padding: 7px 14px;
+    border-radius: 24px;
+    font-size: 0.8rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.nav-pill:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.nav-pill.active {
+    background: linear-gradient(135deg, #e11d48, #be123c);
+    border-color: #fda4af;
+    color: #ffffff;
+    box-shadow: 0 0 15px rgba(225, 29, 72, 0.5);
+    transform: scale(1.03);
+}
+
+.nav-pill.rose-special {
+    background: linear-gradient(135deg, rgba(225, 29, 72, 0.3), rgba(159, 18, 57, 0.45));
+    border-color: #f43f5e;
+    font-weight: 600;
+}
+
+.nav-pill.rose-special:hover {
+    background: linear-gradient(135deg, #f43f5e, #be123c);
+    box-shadow: 0 0 16px rgba(244, 63, 94, 0.6);
+}
+
+/* Floating Center Prompt */
+.center-hint {
+    align-self: center;
+    background: rgba(10, 15, 12, 0.55);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 30px;
+    padding: 8px 18px;
+    font-size: 0.8rem;
+    color: #cbd5e1;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    pointer-events: none;
+    opacity: 0.85;
+    transition: opacity 0.5s;
+    animation: floatUpDown 4s infinite ease-in-out;
+}
+
+/* Bottom Control Dock */
+.bottom-dock {
+    pointer-events: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 20px;
+    padding: 12px 24px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+    max-width: 1100px;
+    margin: 0 auto;
+    width: 100%;
+    animation: fadeInUp 0.8s ease-out;
+}
+
+.dock-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.dock-label {
+    font-size: 0.72rem;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.dock-btn {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.16);
+    color: #e2e8f0;
+    padding: 8px 14px;
+    border-radius: 12px;
+    font-size: 0.82rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    cursor: pointer;
+    transition: all 0.25s ease;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.dock-btn:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.35);
+}
+
+.dock-btn.active {
+    background: rgba(255, 255, 255, 0.25);
+    border-color: #f59e0b;
+    color: #fbbf24;
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+}
+
+.dock-btn.magic-btn {
+    background: linear-gradient(135deg, rgba(225, 29, 72, 0.6), rgba(168, 85, 247, 0.6));
+    border-color: rgba(244, 63, 94, 0.7);
+    color: #fff;
+    font-weight: 600;
+}
+
+.dock-btn.magic-btn:hover {
+    background: linear-gradient(135deg, #f43f5e, #a855f7);
+    box-shadow: 0 0 18px rgba(244, 63, 94, 0.7);
+    transform: translateY(-3px) scale(1.02);
+}
+
+/* Slider Controls */
+.slider-container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.75rem;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    color: var(--text-muted);
+}
+
+.slider-container input[type="range"] {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 80px;
+    height: 4px;
+    border-radius: 2px;
+    background: rgba(255, 255, 255, 0.2);
+    outline: none;
+    cursor: pointer;
+}
+
+.slider-container input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    background: #f43f5e;
+    cursor: pointer;
+    box-shadow: 0 0 8px rgba(244, 63, 94, 0.8);
+    transition: transform 0.2s;
+}
+
+.slider-container input[type="range"]::-webkit-slider-thumb:hover {
+    transform: scale(1.25);
+}
+
+/* Botanical Info Drawer / Modal */
+.info-drawer {
+    position: fixed;
+    right: 24px;
+    top: 50%;
+    transform: translateY(-50%) translateX(120%);
+    width: 320px;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 22px;
+    padding: 24px;
+    z-index: 20;
+    box-shadow: 0 20px 45px rgba(0, 0, 0, 0.5);
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    pointer-events: auto;
+}
+
+.info-drawer.open {
+    transform: translateY(-50%) translateX(0);
+}
+
+.drawer-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    background: none;
+    border: none;
+    color: #94a3b8;
+    font-size: 1.4rem;
+    cursor: pointer;
+    line-height: 1;
+}
+
+.drawer-close:hover {
+    color: #fff;
+}
+
+.drawer-tag {
+    display: inline-block;
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
+    background: rgba(225, 29, 72, 0.25);
+    color: #fda4af;
+    border: 1px solid rgba(244, 63, 94, 0.4);
+    margin-bottom: 10px;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.drawer-title {
+    font-size: 1.4rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+    color: #fff;
+}
+
+.drawer-latin {
+    font-size: 0.85rem;
+    font-style: italic;
+    color: #cbd5e1;
+    margin-bottom: 14px;
+    font-family: serif;
+}
+
+.drawer-desc {
+    font-size: 0.85rem;
+    line-height: 1.55;
+    color: #e2e8f0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    margin-bottom: 16px;
+}
+
+.drawer-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-top: 10px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.stat-item {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+.stat-label {
+    font-size: 0.68rem;
+    color: #94a3b8;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-value {
+    font-size: 0.88rem;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-top: 2px;
+}
+
+/* Loading Overlay */
+#loader-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #080d09;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.8s ease, visibility 0.8s;
+}
+
+#loader-overlay.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-rose {
+    font-size: 3.5rem;
+    animation: pulseHeart 1.5s infinite ease-in-out;
+    filter: drop-shadow(0 0 20px rgba(225, 29, 72, 0.8));
+}
+
+.loader-text {
+    margin-top: 20px;
+    font-size: 1.15rem;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #fda4af;
+    font-weight: 600;
+}
+
+.loader-progress {
+    margin-top: 15px;
+    width: 200px;
+    height: 4px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.loader-bar {
+    width: 0%;
+    height: 100%;
+    background: linear-gradient(90deg, #f43f5e, #fbbf24);
+    transition: width 0.3s ease;
+}
+
+/* Keyframes */
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes gentlePulse {
+    0%, 100% { transform: scale(1); filter: drop-shadow(0 0 6px rgba(244, 63, 94, 0.6)); }
+    50% { transform: scale(1.1); filter: drop-shadow(0 0 16px rgba(244, 63, 94, 0.9)); }
+}
+
+@keyframes pulseHeart {
+    0%, 100% { transform: scale(0.95); }
+    50% { transform: scale(1.15); }
+}
+
+@keyframes floatUpDown {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+}
+
+/* Responsive adjustments */
+@media (max-width: 900px) {
+    .top-header {
+        flex-direction: column;
+        padding: 10px 16px;
+        gap: 10px;
+    }
+    .bottom-dock {
+        flex-wrap: wrap;
+        justify-content: center;
+        padding: 10px 16px;
+    }
+    .info-drawer {
+        width: 90%;
+        max-width: 340px;
+        right: 5%;
+    }
+    .brand-title {
+        font-size: 1.1rem;
+    }
+}

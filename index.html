@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Botanica Sanctuary — A Living Garden of Roses & Blooms</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Playfair+Display:ital,wght@0,600;1,400&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- 3D Canvas Container -->
+    <div id="canvas-container"></div>
+    <div class="cinematic-vignette"></div>
+
+    <!-- UI Overlay Layer -->
+    <div class="ui-layer">
+        <!-- Top Header & Navigation -->
+        <header class="top-header">
+            <div class="brand">
+                <span class="brand-icon">🌹</span>
+                <div>
+                    <h1 class="brand-title">Botanica Sanctum</h1>
+                    <p class="brand-subtitle">Lush Tulips, Sunflowers, Daisies, Lilies &amp; An Ocean of Red Roses</p>
+                </div>
+            </div>
+
+            <!-- Quick Focus Tour Pills -->
+            <nav class="nav-pills">
+                <button class="nav-pill rose-special active" data-target="rose">
+                    <span>🌹</span> Red Roses (Front Centre)
+                </button>
+                <button class="nav-pill" data-target="sunflower">
+                    <span>🌻</span> Sunflowers
+                </button>
+                <button class="nav-pill" data-target="tulip">
+                    <span>🌷</span> Tulips
+                </button>
+                <button class="nav-pill" data-target="lily">
+                    <span>🪷</span> Lilies
+                </button>
+                <button class="nav-pill" data-target="daisy">
+                    <span>🌼</span> Daisies
+                </button>
+                <button class="nav-pill" data-target="tour">
+                    <span>🎬</span> Garden Stroll
+                </button>
+            </nav>
+        </header>
+
+        <!-- Floating Hint -->
+        <div class="center-hint">
+            <span>✨</span> Drag to orbit camera &bull; Scroll to zoom &bull; Click any blossom to inspect
+        </div>
+
+        <!-- Bottom Control Dock -->
+        <footer class="bottom-dock">
+            <!-- Time of Day Selector -->
+            <div class="dock-group">
+                <span class="dock-label">Atmosphere</span>
+                <button class="dock-btn active" data-time="day">☀️ Golden Day</button>
+                <button class="dock-btn" data-time="sunset">🌅 Sunset</button>
+                <button class="dock-btn" data-time="night">🌙 Night Fireflies</button>
+            </div>
+
+            <!-- Interactive Magic Actions -->
+            <div class="dock-group">
+                <button id="btn-shower" class="dock-btn magic-btn">🌸 Petal Shower</button>
+                <button id="btn-water" class="dock-btn">💧 Dew Shower</button>
+            </div>
+
+            <!-- Wind & Audio Controls -->
+            <div class="dock-group">
+                <div class="slider-container">
+                    <span>🍃 Wind</span>
+                    <input type="range" id="wind-slider" min="0.1" max="1.5" step="0.05" value="0.5" title="Wind Strength">
+                </div>
+                <button id="btn-audio" class="dock-btn" title="Toggle Nature Sounds">
+                    🔇 Audio: Muted
+                </button>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Botanical Specimen Drawer -->
+    <aside id="info-drawer" class="info-drawer">
+        <button class="drawer-close" title="Close details">&times;</button>
+        <span id="drawer-tag" class="drawer-tag">Front Centre Feature</span>
+        <h2 id="drawer-title" class="drawer-title">Velvet Grandiflora Red Rose</h2>
+        <p id="drawer-latin" class="drawer-latin">Rosa grandiflora "Crimson Majesty"</p>
+        <p id="drawer-desc" class="drawer-desc">
+            Over 140 velvety crimson red roses dominate the very front center of the sanctuary.
+        </p>
+
+        <div class="drawer-stats">
+            <div class="stat-item">
+                <div class="stat-label">Symbolism</div>
+                <div id="drawer-symbol" class="stat-value">Immortal Love &amp; Majesty</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-label">Aroma Profile</div>
+                <div id="drawer-scent" class="stat-value">Rich Damask Velvet</div>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Initial Loading Screen -->
+    <div id="loader-overlay">
+        <div class="loader-rose">🌹</div>
+        <div class="loader-text">Cultivating Garden...</div>
+        <div class="loader-progress">
+            <div class="loader-bar"></div>
+        </div>
+    </div>
+
+    <!-- Scripts: Three.js and OrbitControls -->
+    <script src="lib/three.min.js"></script>
+    <script src="lib/OrbitControls.js"></script>
+    <script src="audio.js"></script>
+    <script src="garden.js"></script>
+</body>
+</html>
